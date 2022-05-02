@@ -2,7 +2,13 @@ const { Telegraf } = require('telegraf')
 
 //TODO Add your bot token
 const bot = new Telegraf("YOUR_BOT_TOKEN");
+/**
+ * RUN /chat_id for getting chat ID
+ * @type {string}
+ */
+const CHAT_ID = 'YOUR_CHAT_ID';
 
+bot.command('chat_id', (ctx) => ctx.reply(`${ctx.message.chat.id}`));
 //Add your own commands
 /**
  * example - /message text
@@ -27,6 +33,11 @@ bot.command('veh', (ctx) =>{
             color: [[255, 0, 0],[255,0,0]]
     });
 })
+
+mp.events.add('playerJoin', (player) => {
+    bot.telegram.sendMessage(CHAT_ID, `Player with social ${player.socialClub} joined!`);
+});
+
 bot.launch()
 
 // Enable graceful stop
